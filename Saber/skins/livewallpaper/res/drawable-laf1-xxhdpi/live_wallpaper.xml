@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<live-wallpaper xmlns:attr="com.sonymobile.themescreator.resource.live_wallpaper.attr" xmlns:editor="com.sonymobile.themescreator.editwallpaper.editor" attr:version="1" editor:next_index="1">
+    <image attr:index="0" attr:src="THEME_FILE::background.jpg" editor:expanded="true" editor:name="Background">
+        <modifier>
+            <path attr:applyType="modify" attr:argType="wallpaper_offset" attr:target="x" attr:valType="relative_scroll">
+                <point attr:arg="0.00000000" attr:val="-0.50000000"/>
+                <point attr:arg="1.00000000" attr:val="0.50000000"/>
+            </path>
+        </modifier>
+    </image>
+</live-wallpaper>
