@@ -7,4 +7,5 @@
 This is my theme project files,you can edit it by yourself by using Sony Theme Creator.
 
 Attention,please decompressing project.rar if you want to import this project.
+
 Xperia theme made by myself.
