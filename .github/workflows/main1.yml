@@ -1,0 +1,77 @@
+#workflow名字
+name: MacTask
+
+
+#在push *.md文件后执行任务
+on:
+
+  push:
+
+    paths:
+
+    - '**.md'
+
+
+
+jobs:
+
+  build:
+
+
+
+    runs-on: macOS-latest
+
+    
+
+    steps:
+
+    
+    #输出虚拟机的环境变量,非常有用
+    - name: LogAllEnv
+
+      run: printenv
+
+    
+    #引用外部Action,拉取代码仓库到虚拟机工作目录
+    - uses: actions/checkout@v1
+
+
+    #编译iOS运行库
+    - name: BuildIOS
+
+      run: sh ./BuildIOS.sh  
+
+      
+    #编译Android运行库,由于Mac预装了NDK,可以直接用;
+    #Windows上要下载ndk,下载速度非常快,忽略不计,但解压需要时间,所以直接在Mac编译Android
+    - name: BuildAndroid
+
+      run: sh ./BuildAndroid.sh  
+
+      
+    #这里是一些额外的操作,通常不需要.这里是为了把编译好的二进制程序push到原始的GitHub仓库
+    - name: CommitBinaries
+
+      env:
+
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      run: |
+
+        git config user.email "a@b.c"
+
+        git config user.name "$GITHUB_ACTOR"
+
+        git checkout master
+
+        sudo git pull origin master
+
+        sudo git add Release/iOS
+
+        sudo git add Release/Android
+
+        sudo git commit -m "[$GITHUB_WORKFLOW]Auto commit from Github Action"
+
+        git remote set-url --push origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
+
+        git push origin master
